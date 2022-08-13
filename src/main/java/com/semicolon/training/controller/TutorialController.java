@@ -2,6 +2,7 @@ package com.semicolon.training.controller;
 
 import com.semicolon.training.data.models.Tutorial;
 import com.semicolon.training.service.TutorialService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/")
 public class TutorialController {
+    @Autowired
     private final TutorialService tutorialService;
 
     public TutorialController(TutorialService tutorialService) {
@@ -26,11 +28,11 @@ public class TutorialController {
     }
 
     @PostMapping("/tuts/")
-    public Tutorial addTut(@RequestBody Tutorial tuts){
+    public int addTut(@RequestBody Tutorial tuts){
         return tutorialService.addTuts(tuts);
     }
 
-    @GetMapping("/tuts/{id}")
+    @DeleteMapping("/tuts/{id}")
     public Tutorial deleteTuts(@PathVariable("id") Long id){
         return tutorialService.deleteTuts(id);
     }

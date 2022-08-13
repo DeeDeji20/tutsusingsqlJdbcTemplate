@@ -2,9 +2,11 @@ package com.semicolon.training.data.repository;
 
 import com.semicolon.training.data.models.Tutorial;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public class TutorialRepositoryImpl implements  TutorialRepository{
     private final JdbcTemplate jdbcTemplate;
 
@@ -19,7 +21,10 @@ public class TutorialRepositoryImpl implements  TutorialRepository{
 
     @Override
     public int addTutorial(Tutorial tuts) {
-        return 0;
+        String sql = """
+                INSERT INTO tutorial(title, description, level, published, created) VALUES(?, ?, ?, ?, ?);
+                """;
+        return jdbcTemplate.update(sql, tuts.getTitle(), tuts.getDescription(), tuts.getLevel(), tuts.isPublished(), tuts.getCreated());
     }
 
     @Override

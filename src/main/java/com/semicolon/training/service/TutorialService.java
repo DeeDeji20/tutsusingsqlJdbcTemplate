@@ -9,7 +9,7 @@ public interface TutorialService {
 
     Tutorial getAllTutsId(Long id);
 
-    Tutorial addTuts(Tutorial tuts);
+    int addTuts(Tutorial tuts);
 
     Tutorial deleteTuts(Long id);
 }

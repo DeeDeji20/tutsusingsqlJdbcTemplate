@@ -1,10 +1,16 @@
 package com.semicolon.training.service;
 
 import com.semicolon.training.data.models.Tutorial;
+import com.semicolon.training.data.repository.TutorialRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class TutorialServiceimpl implements TutorialService{
+    @Autowired
+    private TutorialRepository tutorialRepository;
     @Override
     public List<Tutorial> getAllTuts() {
         return null;
@@ -16,8 +22,8 @@ public class TutorialServiceimpl implements TutorialService{
     }
 
     @Override
-    public Tutorial addTuts(Tutorial tuts) {
-        return null;
+    public int addTuts(Tutorial tuts) {
+        return tutorialRepository.addTutorial(tuts);
     }
 
     @Override
