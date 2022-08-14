@@ -42,7 +42,7 @@ public class TutorialController {
     }
 
     @DeleteMapping("/tuts/{id}")
-    public int deleteTuts(@PathVariable("id") Long id){
-        return tutorialService.deleteTuts(id);
+    public void deleteTuts(@PathVariable("id") Long id){
+        tutorialService.deleteTuts(id);
     }
 }

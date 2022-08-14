@@ -12,5 +12,5 @@ public interface TutorialService {
 
     int addTuts(Tutorial tuts);
 
-    int deleteTuts(Long id);
+    void deleteTuts(Long id);
 }

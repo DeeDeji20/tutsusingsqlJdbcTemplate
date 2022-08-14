@@ -30,7 +30,14 @@ public class TutorialServiceimpl implements TutorialService{
     }
 
     @Override
-    public int deleteTuts(Long id) {
-        return tutorialRepository.deleteTuts(id);
+    public void deleteTuts(Long id) {
+       Optional<Tutorial> foundTutorial = tutorialRepository.findById(id);
+       foundTutorial.ifPresentOrElse(tutorial -> {
+           int result = tutorialRepository.deleteTuts(id);
+           if (result != 1) throw new IllegalStateException("oops could not  delete movie");
+       }, ()->{
+           throw new NoSuchElementException(String.format("Tutorial with id %s not found", id));
+       });
+        tutorialRepository.deleteTuts(id);
     }
 }
