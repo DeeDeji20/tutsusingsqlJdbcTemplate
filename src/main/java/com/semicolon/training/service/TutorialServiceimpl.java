@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class TutorialServiceimpl implements TutorialService{
@@ -17,8 +19,9 @@ public class TutorialServiceimpl implements TutorialService{
     }
 
     @Override
-    public Tutorial getAllTutsId(Long id) {
-        return null;
+    public Optional<Tutorial> getutsById(Long id) {
+        if (tutorialRepository.findById(id).isEmpty()) throw new NoSuchElementException("Not found");
+        return tutorialRepository.findById(id);
     }
 
     @Override
@@ -27,7 +30,7 @@ public class TutorialServiceimpl implements TutorialService{
     }
 
     @Override
-    public Tutorial deleteTuts(Long id) {
-        return null;
+    public int deleteTuts(Long id) {
+        return tutorialRepository.deleteTuts(id);
     }
 }

@@ -2,11 +2,14 @@ package com.semicolon.training.controller;
 
 import com.semicolon.training.data.models.Tutorial;
 import com.semicolon.training.service.TutorialService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+import java.util.NoSuchElementException;
+import java.util.Optional;
+@Slf4j
 @RestController
 @RequestMapping("api/v1/")
 public class TutorialController {
@@ -23,9 +26,15 @@ public class TutorialController {
     }
 
     @GetMapping("/tuts/{id}")
-    public Tutorial listTut(@PathVariable("id") Long id){
-        return tutorialService.getAllTutsId(id);
+    public Optional<Tutorial> listTut(@PathVariable("id") Long id){
+        try{
+            return tutorialService.getutsById(id);
+        }catch (NoSuchElementException e){
+            log.info(e.getMessage());
+            throw new NoSuchElementException("Not found");
+        }
     }
+
 
     @PostMapping("/tuts/")
     public int addTut(@RequestBody Tutorial tuts){
@@ -33,7 +42,7 @@ public class TutorialController {
     }
 
     @DeleteMapping("/tuts/{id}")
-    public Tutorial deleteTuts(@PathVariable("id") Long id){
+    public int deleteTuts(@PathVariable("id") Long id){
         return tutorialService.deleteTuts(id);
     }
 }

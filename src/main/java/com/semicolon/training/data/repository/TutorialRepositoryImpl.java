@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class TutorialRepositoryImpl implements  TutorialRepository{
@@ -36,6 +37,20 @@ public class TutorialRepositoryImpl implements  TutorialRepository{
 
     @Override
     public int deleteTuts(Long id) {
-        return 0;
+        var sql = """
+                  DELETE FROM tutorial
+                  WHERE id = ?
+                  """;
+        return jdbcTemplate.update(sql, id);
+    }
+
+    @Override
+    public Optional<Tutorial> findById(Long id) {
+        var sql = """
+                SELECT id, title, description, level, published, created
+                FROM tutorial
+                WHERE id = ?
+                """;
+        return Optional.ofNullable(jdbcTemplate.queryForObject(sql, new TutorialRowMapper(), id));
     }
 }
