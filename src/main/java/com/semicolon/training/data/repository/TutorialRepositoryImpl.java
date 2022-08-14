@@ -53,4 +53,17 @@ public class TutorialRepositoryImpl implements  TutorialRepository{
                 """;
         return Optional.ofNullable(jdbcTemplate.queryForObject(sql, new TutorialRowMapper(), id));
     }
+
+    @Override
+    public int updateTut(Long id, Tutorial updateTut) {
+        var sql = """
+                UPDATE tutorial
+                SET title = :title,
+                    description = :description,
+                    level = :level,
+                    published = :published
+                WHERE id = :id
+                """;
+        return jdbcTemplate.update(sql);
+    }
 }

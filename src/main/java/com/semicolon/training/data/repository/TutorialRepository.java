@@ -14,4 +14,5 @@ public interface TutorialRepository  {
     int addTutorial(Tutorial tuts);
     int deleteTuts(Long id);
     Optional<Tutorial> findById(Long id);
+    int updateTut(Long id, Tutorial tutorial);
 }
