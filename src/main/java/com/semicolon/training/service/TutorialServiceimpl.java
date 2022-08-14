@@ -2,6 +2,7 @@ package com.semicolon.training.service;
 
 import com.semicolon.training.data.models.Tutorial;
 import com.semicolon.training.data.repository.TutorialRepository;
+import com.semicolon.training.dto.requests.UpdateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,5 +40,17 @@ public class TutorialServiceimpl implements TutorialService{
            throw new NoSuchElementException(String.format("Tutorial with id %s not found", id));
        });
         tutorialRepository.deleteTuts(id);
+    }
+
+    @Override
+    public String updateTut(Long id, UpdateRequest updateDetails) {
+        Optional<Tutorial> foundTut = tutorialRepository.findById(id);
+        foundTut.ifPresentOrElse(tutorial -> {
+            tutorialRepository.updateTut(id, updateDetails);
+        },()->{
+            throw new NoSuchElementException("Not found");
+        });
+//        tutorialRepository.updateTut(id, updateDetails);
+        return "Updated details";
     }
 }

@@ -1,6 +1,7 @@
 package com.semicolon.training.controller;
 
 import com.semicolon.training.data.models.Tutorial;
+import com.semicolon.training.dto.requests.UpdateRequest;
 import com.semicolon.training.service.TutorialService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,11 @@ public class TutorialController {
     public int addTut(@RequestBody Tutorial tuts){
         return tutorialService.addTuts(tuts);
     }
+
+    @PatchMapping("/tuts/{id}")
+    public String updateTut(@RequestBody UpdateRequest tutorial, @PathVariable("id")  Long id){
+            return tutorialService.updateTut(id, tutorial);
+        }
 
     @DeleteMapping("/tuts/{id}")
     public void deleteTuts(@PathVariable("id") Long id){

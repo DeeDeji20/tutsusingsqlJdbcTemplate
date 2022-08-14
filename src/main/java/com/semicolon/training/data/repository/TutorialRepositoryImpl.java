@@ -2,10 +2,10 @@ package com.semicolon.training.data.repository;
 
 import com.semicolon.training.data.models.Tutorial;
 import com.semicolon.training.data.models.TutorialRowMapper;
+import com.semicolon.training.dto.requests.UpdateRequest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,15 +55,15 @@ public class TutorialRepositoryImpl implements  TutorialRepository{
     }
 
     @Override
-    public int updateTut(Long id, Tutorial updateTut) {
+    public void updateTut(Long id, UpdateRequest updateTut) {
         var sql = """
                 UPDATE tutorial
-                SET title = :title,
-                    description = :description,
-                    level = :level,
-                    published = :published
-                WHERE id = :id
+                SET title = ?,
+                    description = ?,
+                    level = ?,
+                    published ?
+                WHERE id = ?;
                 """;
-        return jdbcTemplate.update(sql);
+        jdbcTemplate.update(sql, updateTut.getTitle(), updateTut.getDescription(), updateTut.getLevel(), updateTut.isPublished());
     }
 }
