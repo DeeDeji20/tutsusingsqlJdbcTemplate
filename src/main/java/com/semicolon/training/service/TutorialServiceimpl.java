@@ -13,7 +13,7 @@ public class TutorialServiceimpl implements TutorialService{
     private TutorialRepository tutorialRepository;
     @Override
     public List<Tutorial> getAllTuts() {
-        return null;
+        return tutorialRepository.findAll();
     }
 
     @Override

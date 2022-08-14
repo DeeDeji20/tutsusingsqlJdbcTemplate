@@ -1,6 +1,7 @@
 package com.semicolon.training.data.repository;
 
 import com.semicolon.training.data.models.Tutorial;
+import com.semicolon.training.data.models.TutorialRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -18,21 +19,11 @@ public class TutorialRepositoryImpl implements  TutorialRepository{
     @Override
     public List<Tutorial> findAll() {
         var sql = """
-                SELECT id, title, desccription, created
+                SELECT id, title, description, level, published, created
                 FROM tutorial
                 LIMIT 100
                 """;
-        return jdbcTemplate.query(sql, (rs, rowNum) -> {
-            return new Tutorial(
-                    rs.getInt("id"),
-                    rs.getString("title"),
-                    rs.getString("description"),
-                    rs.getInt("level"),
-                    rs.getBoolean("published"),
-                    LocalDate.parse(rs.getString("created"))
-            );
-
-        });
+        return jdbcTemplate.query(sql, new TutorialRowMapper());
     }
 
     @Override
