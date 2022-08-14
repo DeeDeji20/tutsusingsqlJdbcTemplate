@@ -2,6 +2,7 @@ package com.semicolon.training.data.models;
 
 
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -10,6 +11,7 @@ import java.time.LocalDate;
 
 @Entity
 @Data
+@AllArgsConstructor
 public class Tutorial {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,11 +27,5 @@ public class Tutorial {
     public Tutorial() {
     }
 
-    public Tutorial(String title, String description, int level, boolean published) {
-        this.title = title;
-        this.description = description;
-        this.level = level;
-        this.published = published;
-        created = LocalDate.now();
-    }
+
 }

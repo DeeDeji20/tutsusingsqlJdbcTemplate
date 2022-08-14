@@ -4,6 +4,7 @@ import com.semicolon.training.data.models.Tutorial;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -16,7 +17,22 @@ public class TutorialRepositoryImpl implements  TutorialRepository{
 
     @Override
     public List<Tutorial> findAll() {
-        return null;
+        var sql = """
+                SELECT id, title, desccription, created
+                FROM tutorial
+                LIMIT 100
+                """;
+        return jdbcTemplate.query(sql, (rs, rowNum) -> {
+            return new Tutorial(
+                    rs.getInt("id"),
+                    rs.getString("title"),
+                    rs.getString("description"),
+                    rs.getInt("level"),
+                    rs.getBoolean("published"),
+                    LocalDate.parse(rs.getString("created"))
+            );
+
+        });
     }
 
     @Override
